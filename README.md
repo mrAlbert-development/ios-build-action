@@ -175,9 +175,13 @@ App Store Connect API Key Issuer ID. Default `""`.
 
 Base64 encoded App Store Connect API Key. Default `""`.
 
-### `custom-keychain-name`
+### `keychain-name`
 
-Custom keychain name. Default `ios-build.keychain`
+Keychain name. Required.
+
+### `keychain-password`
+
+Keychain password. Required.
 
 ## Contributions Welcome!
 

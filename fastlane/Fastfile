@@ -5,20 +5,13 @@ platform :ios do
   lane :export_ipa do
     decode_file
 
-    keychain_password = SecureRandom.uuid
-    keychain_name = nil
-    if !ENV['CUSTOM_KEYCHAIN_NAME'].empty?
-      keychain_name = ENV['CUSTOM_KEYCHAIN_NAME']
-    else
-      keychain_name = 'ios-build.keychain'
-    end
+    keychain_name = ENV['KEYCHAIN_NAME']
+    keychain_password = ENV['KEYCHAIN_PASSWORD']
 
-    create_keychain(
-      name: keychain_name,
+    unlock_keychain(
+      path: keychain_name,
       password: keychain_password,
-      default_keychain: true,
-      unlock: true,
-      timeout: 3600
+      set_default: true
     )
 
     if @is_split_cer
@@ -215,8 +208,6 @@ platform :ios do
       destination: use_build_destination ? ENV['BUILD_DESTINATION'] : nil,
       build_path: use_build_path ? ENV['BUILD_PATH'] : nil
     )
-
-    delete_keychain(name: keychain_name)
   end
 
   # https://github.com/CocoaPods/Xcodeproj/issues/505#issuecomment-584699008
